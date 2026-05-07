@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 
 # Caminho do nosso arquivo perfeito da Netflix
-caminho_arquivo = 'dados/archive/Local/Video Streaming/Netflix/Netflix5Agg.csv'
+caminho_arquivo = 'dados/archive/Local/Video Streaming/YouTube/YouTube10Agg.csv'
 
 print(f"Iniciando o pré-processamento do arquivo: {caminho_arquivo}")
 df = pd.read_csv(caminho_arquivo)
@@ -35,7 +35,7 @@ for status, count in contagem.items():
     print(f"[{status}] {rotulo}: {count} amostras ({pct:.2f}%)")
 
 # 4. Exportação do Dataset Limpo
-nome_arquivo_saida = 'dataset_netflix_processado.csv'
+nome_arquivo_saida = 'dataset_youtube_processado.csv'
 df_limpo.to_csv(nome_arquivo_saida, index=False)
 
 print(f"\nPré-processamento concluído! Arquivo final salvo como '{nome_arquivo_saida}'")
