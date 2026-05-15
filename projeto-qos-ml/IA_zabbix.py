@@ -9,9 +9,7 @@ import warnings
 # Ignora avisos chatos do Scikit-Learn no terminal
 warnings.filterwarnings("ignore", category=UserWarning)
 
-# ==========================================
-# 1. TREINAMENTO DA INTELIGÊNCIA ARTIFICIAL
-# ==========================================
+# 1. Treinamento da IA
 print("Carregando dados processados da Netflix...")
 df = pd.read_csv('dataset_netflix_processado.csv')
 
@@ -26,10 +24,8 @@ modelo_rf.fit(X, y)
 
 print("IA treinada com sucesso!\n")
 
-# ==========================================
-# 2. SIMULAÇÃO DE TRÁFEGO (DATA REPLAY)
-# ==========================================
-# Configurando o "carteiro" que vai entregar os dados no Zabbix (porta 10051 padrão)
+# 2. Simulação de Tráfego (DATA REPLAY)
+# Configurando a entrega dos dados no Zabbix (porta 10051 padrão)
 zabbix_sender = Sender(server='127.0.0.1', port=10051)
 host_zabbix = 'Netflix_Node'
 
