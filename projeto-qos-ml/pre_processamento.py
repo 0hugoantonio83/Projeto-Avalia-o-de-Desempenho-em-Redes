@@ -15,7 +15,6 @@ LIMIAR_LATENCIA = 45.0
 df['Status'] = np.where(df['ARTT'] > LIMIAR_LATENCIA, 1, 0)
 
 # 2. Limpeza de Features
-# O modelo de IA não precisa de IPs, Cidades ou Longitude para prever rede.
 # Vamos manter apenas 'Time' (para usarmos na simulação de tempo real depois),
 # 'Length' (Throughput em bytes) e 'ARTT' (Latência).
 colunas_uteis = ['Time', 'Length', 'ARTT', 'Status']
