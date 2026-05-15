@@ -5,9 +5,6 @@ import time
 import warnings
 warnings.filterwarnings("ignore", category=UserWarning)
 
-# ==========================================
-# 1. PERFIL DA MÁQUINA (Troque para cada terminal)
-# ==========================================
 # TERMINAL 1:
 NOME_DO_HOST_ZABBIX = 'Node_Netflix' 
 ARQUIVO_ESPECIFICO = 'dataset_netflix_processado.csv'
@@ -44,7 +41,7 @@ try:
         linha_nova = df_novo.iloc[i]
         linha_especifica = df_plataforma.iloc[i]
 
-        # 1. Métricas Avançadas (Dataset Novo)
+        # Dataset Novo
         vazao = linha_nova['flowBytesPerSecond']
         densidade = linha_nova['flowPktsPerSecond']
         tempo_medio = linha_nova['mean_flowiat']
@@ -57,8 +54,7 @@ try:
         previsao = modelo_rf.predict(dados_rede)[0]
         status_ia = "POSSÍVEL DEGRADAÇÃO" if previsao == 1 else "STREAMING LIMPO"
 
-        # 3. Métricas Reais da Plataforma (Dataset Específico)
-        # CORREÇÃO APLICADA: Sem o .iloc, chamando diretamente o nome da coluna!
+        # 3. Dataset Antigo
         latencia_real = linha_especifica['ARTT']
         tamanho_pacote = linha_especifica['Length']
 
