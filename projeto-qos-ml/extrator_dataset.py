@@ -3,9 +3,7 @@ import pandas as pd
 import time
 import io
 
-# ==========================================
-# CONFIGURAÇÕES DO EXTRATOR
-# ==========================================
+# Configuração do Extrator
 INTERFACE_REDE = "eth0" # Mude para a sua interface de internet (use o comando 'ip a' no terminal para descobrir, pode ser enp0s3)
 TEMPO_CAPTURA_SEGUNDOS = 60 # Quanto tempo ele vai gravar a rede antes de gerar o CSV
 ARQUIVO_SAIDA = "meu_tráfego_ao_vivo.csv"
