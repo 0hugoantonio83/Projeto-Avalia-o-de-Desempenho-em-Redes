@@ -82,4 +82,5 @@ Isso gerará o arquivo metricas_reais_relatorio.csv, pronto para ser plotado em 
 
 ### Autores
 Hugo Antônio Fernandes dos Santos
+//
 Pedro Henrique Teixeira Cardoso de Paula
