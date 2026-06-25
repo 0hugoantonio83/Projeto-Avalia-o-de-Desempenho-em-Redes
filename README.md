@@ -44,6 +44,7 @@ docker compose up -d
 ### ⚠️ Atenção (Permissões do Grafana): Se o container do Grafana entrar em loop de reinicialização (restarting), é necessário conceder a permissão correta (ID 472) à pasta de dados na sua máquina host:
 
 sudo chown -R 472:472 grafana_data/
+
 docker compose restart grafana
 
 ### Configurando o Ambiente Python (Cérebro e Agentes) Para evitar conflitos com pacotes do sistema operacional (PEP 668 do Ubuntu), crie um ambiente virtual isolado:
