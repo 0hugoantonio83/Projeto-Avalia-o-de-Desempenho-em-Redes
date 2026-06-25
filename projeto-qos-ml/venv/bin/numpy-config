@@ -1,4 +1,4 @@
-#!/home/hugo/projeto-qos-ml/venv/bin/python3
+#!/home/hugo/Projeto-Avalia-o-de-Desempenho-em-Redes/projeto-qos-ml/venv/bin/python3
 # -*- coding: utf-8 -*-
 import re
 import sys
