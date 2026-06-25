@@ -51,7 +51,7 @@ docker compose restart grafana
 cd archive
 python3 -m venv venv
 source venv/bin/activate
-pip install zabbix-utils scikit-learn pandas numpy scapy joblib
+pip install zabbix-utils scikit-learn pandas numpy scapy joblib matplotlib seaborn
 ```
 
 ### Acesse as interfaces web:
