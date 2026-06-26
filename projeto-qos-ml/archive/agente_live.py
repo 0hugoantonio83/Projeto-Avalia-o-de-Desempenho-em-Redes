@@ -7,7 +7,9 @@ import threading
 import warnings
 warnings.filterwarnings("ignore")
 
+# ==========================================
 # CONFIGURAÇÕES GERAIS
+# ==========================================
 PLACA_DE_REDE = "enp4s0"
 NOME_DO_HOST_ZABBIX = 'Node_YouTube' 
 IP_DO_ZABBIX = '127.0.0.1'
@@ -22,7 +24,6 @@ def captura_pacotes(pkt):
     pacotes_buffer.append((time.time(), len(pkt)))
 
 def iniciar_sniffer():
-    # Filtro para tráfego seguro (web/streaming), ignorando pacotes locais
     sniff(iface=PLACA_DE_REDE, filter="(tcp or udp) and port 443", prn=captura_pacotes, store=False)
 
 thread = threading.Thread(target=iniciar_sniffer, daemon=True)
@@ -31,16 +32,20 @@ thread.start()
 print(f"\n🚀 Escutando tráfego real na interface {PLACA_DE_REDE}...")
 print("Abra o YouTube e veja o painel do Grafana ganhar vida!\n")
 
+# Contador para tolerância do protocolo DASH
+contador_inatividade = 0 
+
 try:
     while True:
         time.sleep(1) 
         
-        # Cria uma cópia da janela de pacotes e limpa o buffer principal
         pacotes_atuais = pacotes_buffer.copy()
         pacotes_buffer.clear()
         
-        # CENÁRIO 1: Rede ativa (temos dados para a IA analisar)
+        # CENÁRIO 1: Rede ativa (Tráfego chegando)
         if len(pacotes_atuais) > 1:
+            contador_inatividade = 0 # Zera o contador pois a rede respondeu
+            
             tempos = [p[0] for p in pacotes_atuais]
             tamanhos = [p[1] for p in pacotes_atuais]
             
@@ -54,7 +59,6 @@ try:
             tempo_ocioso = sum(iat for iat in iats if iat > 0.05)
             tempo_ativo = 1.0 - tempo_ocioso if tempo_ocioso < 1.0 else 0.01
             
-            # Julgamento da IA
             dados_rede = [[vazao, densidade, tempo_medio, jitter, tempo_ativo, tempo_ocioso]]
             previsao = modelo_rf.predict(dados_rede)[0]
             
@@ -62,17 +66,23 @@ try:
             status_ia = "🚨 Degradação" if previsao == 1 else "✅ Limpo"
             tamanho_medio = float(np.mean(tamanhos))
 
+        # CENÁRIO 2: O Silêncio (Pode ser o DASH dormindo ou a rede que caiu)
         else:
+            contador_inatividade += 1
             vazao = 0.0
             densidade = 0
             jitter = 0.0
-            tempo_ocioso = 1.0 # 100% de ociosidade neste 1 segundo
-            
-            status_num = 2 # Novo código de status para o Grafana alertar queda total!
-            status_ia = "❌ Rede Inativa (Zero Tráfego)"
+            tempo_ocioso = 1.0 
             tamanho_medio = 0.0
+            
+            # Só declara morte da rede após 5 segundos de silêncio absoluto
+            if contador_inatividade >= 5:
+                status_num = 2 
+                status_ia = "❌ Rede Inativa"
+            else:
+                status_num = 0 
+                status_ia = "✅ Limpo"
 
-        # Envio para o Zabbix
         metricas = [
             ItemValue(NOME_DO_HOST_ZABBIX, 'qos.status', status_num),
             ItemValue(NOME_DO_HOST_ZABBIX, 'qos.vazao', float(vazao)),

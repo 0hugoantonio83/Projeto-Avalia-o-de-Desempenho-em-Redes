@@ -6,16 +6,16 @@ import warnings
 warnings.filterwarnings("ignore", category=UserWarning)
 
 # TERMINAL 1:
-NOME_DO_HOST_ZABBIX = 'Node_Netflix' 
-ARQUIVO_ESPECIFICO = 'dataset_netflix_processado.csv'
+#NOME_DO_HOST_ZABBIX = 'Node_Netflix' 
+#ARQUIVO_ESPECIFICO = 'dataset_netflix_processado.csv'
 
 # TERMINAL 2 (Mude as variáveis acima para):
 #NOME_DO_HOST_ZABBIX = 'Node_YouTube'
 #ARQUIVO_ESPECIFICO = 'dataset_youtube_processado.csv'
 
 # TERMINAL 3 (Mude as variáveis acima para):
-#NOME_DO_HOST_ZABBIX = 'Node_Amazon'
-#ARQUIVO_ESPECIFICO = 'dataset_amazon_processado.csv'
+NOME_DO_HOST_ZABBIX = 'Node_Amazon'
+ARQUIVO_ESPECIFICO = 'dataset_amazon_processado.csv'
 
 IP_DO_ZABBIX = '127.0.0.1'
 
