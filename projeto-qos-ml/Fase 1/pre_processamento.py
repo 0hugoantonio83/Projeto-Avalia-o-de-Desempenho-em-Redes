@@ -1,14 +1,14 @@
 import pandas as pd
 import numpy as np
 
-# Caminho do nosso arquivo perfeito da Netflix
+# Caminho do nosso arquivo
 caminho_arquivo = 'dados/archive/Local/Video Streaming/YouTube/YouTube10Agg.csv'
 
 print(f"Iniciando o pré-processamento do arquivo: {caminho_arquivo}")
 df = pd.read_csv(caminho_arquivo)
 
 # 1. Definir a regra de Degradação (Labeling)
-# Limiar escolhido com base no 3º Quartil (75%) da análise exploratória.
+# Limiar escolhido
 LIMIAR_LATENCIA = 45.0
 
 # Cria a coluna 'Status': 1 se ARTT > 45 (Degradação), 0 caso contrário (Normal)
