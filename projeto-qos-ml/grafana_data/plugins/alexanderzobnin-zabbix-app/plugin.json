@@ -53,8 +53,8 @@
                 "path": "img/screenshot-triggers.png"
             }
         ],
-        "version": "6.4.0",
-        "updated": "2026-06-09"
+        "version": "6.4.1",
+        "updated": "2026-07-02"
     },
     "includes": [
         {
@@ -69,7 +69,7 @@
         }
     ],
     "dependencies": {
-        "grafanaDependency": ">=11.6.0"
+        "grafanaDependency": ">=11.6.0-0"
     },
     "buildMode": "production"
 }

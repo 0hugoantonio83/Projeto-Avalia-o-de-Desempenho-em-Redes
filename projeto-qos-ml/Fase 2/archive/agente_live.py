@@ -7,8 +7,8 @@ import threading
 import warnings
 warnings.filterwarnings("ignore")
 
-# CONFIGURAÇÕES GERAIS
 
+# CONFIGURAÇÕES GERAIS
 PLACA_DE_REDE = "enp4s0"
 NOME_DO_HOST_ZABBIX = 'Node_YouTube' 
 IP_DO_ZABBIX = '127.0.0.1'
@@ -31,6 +31,8 @@ thread.start()
 print(f"\n🚀 Escutando tráfego real na interface {PLACA_DE_REDE}...")
 print("Abra o YouTube e veja o painel do Grafana ganhar vida!\n")
 
+contador_inatividade = 0 
+
 try:
     while True:
         time.sleep(1) 
@@ -40,6 +42,8 @@ try:
 
         # CENÁRIO 1: Rede Ativa (Temos pacotes fluindo)
         if len(pacotes_atuais) > 0:
+            contador_inatividade = 0 # O vídeo carregou algo
+            
             tempos = [p[0] for p in pacotes_atuais]
             tamanhos = [p[1] for p in pacotes_atuais]
 
@@ -57,36 +61,38 @@ try:
             tempo_ativo = tempos[-1] - tempos[0] if densidade > 1 else 0.0
             tempo_ocioso = 1.0 - tempo_ativo if tempo_ativo < 1.0 else 0.0
 
-            # Passamos os dados para a IA
+            # Passamos os dados para a IA classificar
             dados_rede = [[vazao, densidade, tempo_medio, jitter, tempo_ativo, tempo_ocioso]]
             previsao = modelo_rf.predict(dados_rede)[0]
             
             status_num = int(previsao)
             tamanho_medio = float(np.mean(tamanhos))
 
-        # CENÁRIO 2: O Silêncio Absoluto (Zero pacotes)
+        # CENÁRIO 2: Silêncio para a IA julgar
         else:
+            contador_inatividade += 1 # Contamos mais um segundo de inatividade
             vazao = 0.0
             densidade = 0
             tempo_medio = 0.0
             jitter = 0.0
             tempo_ativo = 0.0
-            tempo_ocioso = 1.0 
             tamanho_medio = 0.0
+            tempo_ocioso = float(contador_inatividade) 
             
-            
+            # A IA avalia. Se tempo_ocioso for <= 4, ela devolve 0 (Limpo). Se for >= 5, devolve 2 (Inativa)!
             dados_rede = [[vazao, densidade, tempo_medio, jitter, tempo_ativo, tempo_ocioso]]
             previsao = modelo_rf.predict(dados_rede)[0]
             status_num = int(previsao)
 
         # Tradutor de logs para o ecrã
         if status_num == 0:
-            status_ia = "✅ Limpo"
+            status_ia = "✅ Limpo (Streaming ou Buffer)"
         elif status_num == 1:
             status_ia = "🚨 Degradação"
         else:
             status_ia = "❌ Rede Inativa"
 
+        # Envio unificado das métricas para o Zabbix
         metricas = [
             ItemValue(NOME_DO_HOST_ZABBIX, 'qos.status', status_num),
             ItemValue(NOME_DO_HOST_ZABBIX, 'qos.vazao', float(vazao)),
@@ -96,7 +102,7 @@ try:
         ]
         
         zabbix_sender.send(metricas)
-        print(f"[{NOME_DO_HOST_ZABBIX}] Vazão: {vazao/1024:.1f} KB/s | Jitter: {jitter:.4f}s | IA: {status_ia}")
+        print(f"[{NOME_DO_HOST_ZABBIX}] Vazão: {vazao/1024:.1f} KB/s | Ocioso: {tempo_ocioso}s | IA: {status_ia}")
 
 except KeyboardInterrupt:
     print("\nMonitoramento encerrado pelo usuário.")

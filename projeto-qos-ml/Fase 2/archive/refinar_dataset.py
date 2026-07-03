@@ -5,7 +5,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report
 import joblib
 
-print("1. A ler o tráfego bruto do Kaggle...")
+print("1. Lendo o tráfego bruto do Kaggle...")
 df_bruto = pd.read_csv('consolidated_traffic_data.csv')
 
 # Isolamos APENAS o tráfego de Streaming
@@ -21,45 +21,56 @@ colunas = [
 ]
 df_limpo = df_streaming[colunas].copy()
 
-# Removemos qualquer sujidade (NaN) que possa ter vindo do dataset original
+# Removemos qualquer sujeira (NaN)
 df_limpo = df_limpo.dropna()
 
 print(f"-> Encontradas {len(df_limpo)} amostras de Streaming perfeito.")
 
 
-# INJEÇÃO DE ANOMALIAS SINTÉTICAS (3 CENÁRIOS)
-print("2. A fabricar cenários de Rede (Normal, Gargalo e Queda)...")
+# INJEÇÃO DE ANOMALIAS SINTÉTICAS
+print("2. Fabricando cenários de Rede (Normal, Gargalo, Buffer e Queda)...")
 
-# CENÁRIO 0: REDE SAUDÁVEL (34% dos dados)
-df_bom = df_limpo.sample(frac=0.34, random_state=42).copy()
+# CENÁRIO 0: REDE SAUDÁVEL (30% dos dados)
+df_bom = df_limpo.sample(frac=0.30, random_state=42).copy()
 df_bom['Status'] = 0 
 
 restante = df_limpo.drop(df_bom.index)
 
-# CENÁRIO 1: DEGRADAÇÃO / GARGALO (33% dos dados)
-df_ruim = restante.sample(frac=0.5, random_state=42).copy()
+# CENÁRIO 1: DEGRADAÇÃO / GARGALO 
+df_ruim = restante.sample(frac=0.40, random_state=42).copy()
 df_ruim['flowBytesPerSecond'] = df_ruim['flowBytesPerSecond'] * np.random.uniform(0.1, 0.4) 
 df_ruim['std_flowiat'] = df_ruim['std_flowiat'] * np.random.uniform(3.0, 6.0) 
 df_ruim['mean_idle'] = df_ruim['mean_idle'] * np.random.uniform(0.0, 0.2) 
 df_ruim['Status'] = 1 
 
-# CENÁRIO 2: QUEDA DE REDE / SILÊNCIO (33% dos dados)
-df_silencio = restante.drop(df_ruim.index).copy()
+restante_silencio = restante.drop(df_ruim.index)
 
+# CENÁRIO 0 (BUFFER): O silêncio saudável do DASH (1 a 4 segundos)
+df_buffer = restante_silencio.sample(frac=0.5, random_state=42).copy()
+df_buffer['flowBytesPerSecond'] = 0.0
+df_buffer['flowPktsPerSecond'] = 0.0
+df_buffer['mean_flowiat'] = 0.0
+df_buffer['std_flowiat'] = 0.0
+df_buffer['mean_active'] = 0.0
+df_buffer['mean_idle'] = np.random.uniform(1.0, 4.0) # IA aprende que até 4s é apenas buffer
+df_buffer['Status'] = 0 # Mantém como "Limpo"!
+
+# CENÁRIO 2: QUEDA DE REDE REAL (Silêncio de 5+ segundos)
+df_silencio = restante_silencio.drop(df_buffer.index).copy()
 df_silencio['flowBytesPerSecond'] = 0.0
 df_silencio['flowPktsPerSecond'] = 0.0
 df_silencio['mean_flowiat'] = 0.0
 df_silencio['std_flowiat'] = 0.0
 df_silencio['mean_active'] = 0.0
-df_silencio['mean_idle'] = 1.0
+df_silencio['mean_idle'] = np.random.uniform(5.0, 10.0) # IA aprende que 5s+ é morte da rede
 df_silencio['Status'] = 2 
 
 # Juntamos tudo num único dataset final
-df_final = pd.concat([df_bom, df_ruim, df_silencio])
+df_final = pd.concat([df_bom, df_ruim, df_buffer, df_silencio])
+
 
 # TREINAMENTO DA IA
-
-print("3. A treinar o modelo Random Forest Definitivo...")
+print("3. Treinando o modelo Random Forest Definitivo...")
 X = df_final.drop('Status', axis=1)
 y = df_final['Status']
 
@@ -71,11 +82,10 @@ modelo_v2.fit(X_train, y_train)
 
 print("\n--- Boletim da IA ---")
 previsoes = modelo_v2.predict(X_test)
-print(classification_report(y_test, previsoes, target_names=['Normal (0)', 'Degradação (1)', 'Queda/Silêncio (2)']))
+print(classification_report(y_test, previsoes, target_names=['Limpo/Buffer (0)', 'Degradação (1)', 'Queda Real (2)']))
 
 # EXPORTAÇÃO
-
 joblib.dump(modelo_v2, 'modelo_qos_v2.pkl')
 df_final.to_csv('dataset_streaming_v2.csv', index=False)
 
-print("Sucesso! O ficheiro 'modelo_qos_v2.pkl' reconhece os 3 cenários de rede de forma autónoma.")
+print("Sucesso! O ficheiro 'modelo_qos_v2.pkl' agora diferencia Buffer de Queda de Rede.")

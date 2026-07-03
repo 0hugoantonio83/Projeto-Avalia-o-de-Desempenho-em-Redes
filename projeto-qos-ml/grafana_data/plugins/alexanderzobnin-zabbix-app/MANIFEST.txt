@@ -7,20 +7,20 @@ Hash: SHA512
   "signedByOrg": "grafana",
   "signedByOrgName": "Grafana Labs",
   "plugin": "alexanderzobnin-zabbix-app",
-  "version": "6.4.0",
-  "time": 1780989698817,
+  "version": "6.4.1",
+  "time": 1783017518081,
   "keyId": "7e4d0c6a708866e7",
   "files": {
     "LICENSE": "3726ae034c948e6ecbb2501c6c2d3fe528653767c7d45950f220766f102ead09",
-    "CHANGELOG.md": "f867f6db78a2362d64a6204e216aca5b63a2ec5994d7a308639c6d5757c426a4",
-    "plugin.json": "e87eb26f74518cf0200ccf0252169ac034fa0021bae6e8e1b5991a6c9a27b1e3",
-    "styles/light.css": "2b19bbfd684fa22e739ebcab7089cb55047f21e2fb0416567392562bdeb41d79",
-    "styles/dark.css": "7fb6566739d285bfe1d05eccb9c115725741bc8e8468726c97e7c1f0aafc2e19",
+    "CHANGELOG.md": "946102a690cdc304c2df8e4c503816286496d35f682557e2ec6c0b82b6c9afcc",
+    "plugin.json": "f229298f43420d866dc0b1f1c3df378932e5b319b57037bd963d45bdd7ddc199",
+    "styles/light.css": "27e07d5501e616791d5a11ae882fab20ae5932cd0bd83840edbe2d1847c52c1e",
+    "styles/dark.css": "ca5294ea35b03d49a4a6f488bdaa453832f1c037984f47aeefa97c29f2585f48",
     "panel-triggers/plugin.json": "9f255d330f893f2d11208b5b439d61d7b9533db69c7be2e656eae52354823716",
     "panel-triggers/img/icn-zabbix-problems-panel.svg": "e9afa313c485976d9ea4f6735bdc71af271fde5d72963e3c461d9a10144bd229",
     "panel-triggers/module.js.LICENSE.txt": "ed9db5bb821a266fcbdebead228ad505223e3bdb1f4d6faf694793a42e4532df",
-    "panel-triggers/module.js.map": "cbb494f8c76ba0b4910dc01a3cc6a87b0a9158429d60415378915e9e81554b74",
-    "panel-triggers/module.js": "3a0f7cf5b53d668efaba03f34a1881043901e3553540b0ffb53255e947c1a1b9",
+    "panel-triggers/module.js.map": "41bdbeaf280d0656d376b313330bab4418938dba88b2cb88ba94a4fc4d125b73",
+    "panel-triggers/module.js": "d46c83341e28ffbde91d0894d5aa3d8e43dbdc5335421a6b15f9f0fbef4645ef",
     "img/screenshot-annotations.png": "b698176703e2af787f58c5856574f55918c468ae69635b3b9e76b3fe2611a0d6",
     "img/icn-zabbix-app.svg": "406bfc69249278c8d0f97462fea735639b05328229d887c2e6b10bf97592fbad",
     "img/screenshot-metric_editor.png": "c99dce5cbcc4858bcb4a432e73c051963178e948014b1fb5689dce17a5624f73",
@@ -29,26 +29,26 @@ Hash: SHA512
     "img/screenshot-showcase.png": "5be71aacb80a513e7838b99bdeeed246b8d518cb6a846905541806e52dc291f8",
     "go_plugin_build_manifest": "678553f9cbb0145662407046b8612bd21c27dce1a0dc1b7f35e7f50adae19b48",
     "datasource/query_help.md": "ce3686ec3090aa95809acc7957f952886bc5d57fad2bc120b56a6cd408a97634",
-    "datasource/gpx_zabbix-datasource_linux_amd64": "6b0c7c4fee76595b0c87de2ae75c725693ebd8fd8795f4cec869fc632e6cc91c",
+    "datasource/gpx_zabbix-datasource_linux_amd64": "133a095619943a47f922db30da98bd9d497ddf43ab3ebebd9df993adaf8a59fb",
     "datasource/plugin.json": "7fc599290a81c684a31cf0359d860c55a621a08bbdf6c2cc5b5c8a81bf0eccc4",
     "datasource/img/icn-zabbix-datasource.svg": "406bfc69249278c8d0f97462fea735639b05328229d887c2e6b10bf97592fbad",
     "datasource/dashboards/zabbix_system_status.json": "fc731a981c06c3f916138f709c9ef6802ceace4e5f2ef942b7450c97e83261f2",
     "datasource/dashboards/zabbix_server_dashboard.json": "7b22547eb3e3b0c41c507019d7edbdca9014c6146db76b0d3a8a3d8c22695190",
     "datasource/dashboards/template_linux_server.json": "8abde4d79110835d1d8bd9b51192ce5d6923a0303f779713b213355f48930c99",
-    "datasource/module.js.map": "66b32e7001bb92fca1e5b91344ea1866e8d3a8d371df4229737e4fb179df5388",
-    "datasource/module.js": "11aea9e43e4978e58cc3b16fb7cc0bc137b4a13e66d79c9b1a985bc3d3101b63",
+    "datasource/module.js.map": "d00afca43ac2a234ac302e49ca7bf7b6333ccc9e568c914f458a6c1545d1d43a",
+    "datasource/module.js": "dba4e60d2b1d89ab0332f7a306a46e86b12e5cc3bab19bfe1ef9225edf933f61",
     "README.md": "40de3d46cfe9dda64b360a20c550665532470f528d0e70ff6b2db5fdea3ddb5e",
-    "module.js.map": "d28624d40e20f25bef794bbefe7a58ba2482deaac358e8bbad73f00281485484",
-    "module.js": "1bc88b0b499c9681c3ad10a6cbf09dd6f13f750e4cd50d9ed87e976fdeb2e6a4"
+    "module.js.map": "cb4b68e061993c921a43c2049bf2f69b4704ae1dbd38e96d974c233a7dba7c9a",
+    "module.js": "fb4e0ee2d94bb250965a5d12364d6d65174d4eaacf60c2bf487e2c6acee3e30e"
   }
 }
 -----BEGIN PGP SIGNATURE-----
 
-wsA/BAETCgBtBYJqJ78CCRB+TQxqcIhm50UUAAAAAAAcACBzYWx0QG5vdGF0
-aW9ucy5vcGVucGdwanMub3JndJBAxte19zYjzO2TepnPiWWXFGqrmfRN1eEc
-LsdXtmMWIQTzOyW2kQdOhGNlcPN+TQxqcIhm5wAAFMcCCQEL28GwFaufE3fS
-P4UqCiak6qs2iWU7NkN86rXNiyo5za3ef9AN8Rc0F0PXy24fBkrf8gQTTQ5S
-z+bI41QaiastmQIJAZsDu2zjynSIotr6mgEq9ZxkyG/Mwt9XZSi3nhbirJ2l
-kA2caT7kUpFOFUYfzJhBJd4sHjA4QkPkS9+pYa2gZowE
-=oNkO
+wsA/BAETCgBtBYJqRrAuCRB+TQxqcIhm50UUAAAAAAAcACBzYWx0QG5vdGF0
+aW9ucy5vcGVucGdwanMub3Jn4f9ziHrEI0WWnpTbR9v5Z/cFw8N07bYmMXhY
+wDb7THIWIQTzOyW2kQdOhGNlcPN+TQxqcIhm5wAAbUgCCQG5+zQCP+RfXtcB
+uJ8fdtjgPJpvcX+cV5VWYb2azG8W2371l0MkYpno4hXwmlgqDqGrvAHRiHZA
+Oxvl9x0wI/833gIJAQJVtb7OWMjRC8wKCeX8mBGh7cnGGuudMmII7LU1GFy9
+5/rl6E0CZUKzMlLd87ip64XMGd1+TXKo3xDbj1eYW/4h
+=Lkvc
 -----END PGP SIGNATURE-----
