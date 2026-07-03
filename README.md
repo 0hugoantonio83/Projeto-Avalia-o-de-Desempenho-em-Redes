@@ -37,7 +37,7 @@ Clone o repositório, entre na pasta do projeto e inicie os containers:
 
 ```bash
 git clone [https://github.com/SEU_USUARIO/SEU_REPOSITORIO.git](https://github.com/SEU_USUARIO/SEU_REPOSITORIO.git)
-cd SEU_REPOSITORIO
+cd projeto-qos-ml
 docker compose up -d
 ```
 
@@ -51,7 +51,6 @@ docker compose up -d
 Para evitar conflitos com pacotes do sistema operacional (PEP 668 do Ubuntu), crie um ambiente virtual isolado:
 
 ```bash
-cd archive
 python3 -m venv venv
 source venv/bin/activate
 pip install zabbix-utils scikit-learn pandas numpy scapy joblib matplotlib seaborn
@@ -71,6 +70,8 @@ Utiliza datasets pré-processados para simular tráfego de três nós simultâne
 
 *Antes de executar, edite o arquivo `agente_global.py` para alinhar os datasets com os hosts do Zabbix.*
 ```bash
+cd projeto-qos-ml/Fase\ 2/archive
+vim/nano agente_global.py
 ./venv/bin/python3 agente_global.py
 ```
 
@@ -116,15 +117,6 @@ O teste de predição definitivo. O Kali Linux se posiciona silenciosamente entr
    sudo tc qdisc add dev <SUA_INTERFACE_KALI> root netem delay 80ms 30ms
    ```
 **Resultado Esperado:** A IA calculará a arritmia exata dos pacotes atrasados pelo Kali e disparará o alarme preventivo muito antes de o buffer do vídeo esvaziar.
-
----
-
-## 📊 Processamento de Dados Externos (Wireshark)
-Caso realize capturas externas de falhas reais (.pcapng exportado para .csv), utilize o script de refinamento para extrair as métricas exatas consolidadas por segundo (Vazão, Densidade, Jitter):
-```bash
-./venv/bin/python3 extrair_teste_real.py
-```
-Isso gerará o arquivo `metricas_reais_relatorio.csv`, pronto para ser plotado em gráficos acadêmicos.
 
 ---
 

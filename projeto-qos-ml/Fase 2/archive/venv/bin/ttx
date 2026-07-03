@@ -1,4 +1,6 @@
-#!/home/hugo/Projeto-Avalia-o-de-Desempenho-em-Redes/projeto-qos-ml/archive/venv/bin/python3
+#!/bin/sh
+'''exec' "/home/hugo/Projeto-Avalia-o-de-Desempenho-em-Redes/projeto-qos-ml/Fase 2/archive/venv/bin/python3" "$0" "$@"
+' '''
 # -*- coding: utf-8 -*-
 import re
 import sys
